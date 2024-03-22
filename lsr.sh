@@ -1,0 +1,8 @@
+#!/bin/bash
+
+TOPOLOGY_FILE=$1
+MESSAGE_FILE=$2
+CHANGES_FILE=$3
+OUTPUT_FILE=${4:-output.txt}
+
+python3 src/lsr.py "$TOPOLOGY_FILE" "$MESSAGE_FILE" "$CHANGES_FILE" "$OUTPUT_FILE"
