@@ -114,7 +114,6 @@ def main(topology_file, message_file, change_file, output_file):
 
 if __name__ == "__main__":
     import sys
-    topology_file, message_file, change_file = sys.argv[1:4]
-    output_file = 'output.txt'  # Define the output file path
+    topology_file, message_file, change_file, output_file = sys.argv[1:5]
     main(topology_file, message_file, change_file, output_file)
 
