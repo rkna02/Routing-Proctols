@@ -1,3 +1,6 @@
+import heapq
+
+
 class Node:
     def __init__(self, node_id):
         self.node_id = node_id
@@ -17,7 +20,6 @@ class Network:
         self.nodes[node1_id].links[node2_id] = cost
         self.nodes[node2_id].links[node1_id] = cost
 
-import heapq
 
 def dijkstra(network, start_id):
     distances = {node_id: float('inf') for node_id in network.nodes}
@@ -43,6 +45,7 @@ def dijkstra(network, start_id):
     
     return distances, previous_nodes, full_paths  # Return full paths as well
 
+
 def build_routing_tables(network):
     routing_tables = {}
     for node_id in network.nodes:
@@ -63,6 +66,7 @@ def read_topology(file_name, network):
         for line in file:
             node1_id, node2_id, cost = map(int, line.split())
             network.add_link(node1_id, node2_id, cost)
+
 
 def forward_messages(file_name, routing_tables, file_path):
     with open(file_name, 'r') as msg_file, open(file_path, 'a') as out_file:
@@ -89,6 +93,7 @@ def read_changes(change_file):
                 changes.append((node1_id, node2_id, cost))
     return changes
 
+
 def apply_change(network, node1_id, node2_id, cost):
     if cost == -999:  # Link removal
         if node1_id in network.nodes and node2_id in network.nodes[node1_id].links:
@@ -96,6 +101,7 @@ def apply_change(network, node1_id, node2_id, cost):
             del network.nodes[node2_id].links[node1_id]
     else:  # Link addition or update
         network.add_link(node1_id, node2_id, cost)
+
 
 def write_forwarding_tables(routing_tables, file_path):
     with open(file_path, 'a') as file:  # Consider 'w' for overwrite or 'a' for append based on your need
@@ -106,9 +112,13 @@ def write_forwarding_tables(routing_tables, file_path):
 
 
 def main(topology_file, message_file, change_file, output_file):
+    # Open output file and erase file content if there are any
+    with open(output_file, 'w') as file:
+        file.truncate()
+
     network = Network()
     read_topology(topology_file, network)
-    routing_tables = build_routing_tables(network)  # Compute routing tables
+    routing_tables = build_routing_tables(network)
     
     # Write initial forwarding tables to the output file
     write_forwarding_tables(routing_tables, output_file)

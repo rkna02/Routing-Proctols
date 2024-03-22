@@ -4,6 +4,7 @@ class Node:
         self.neighbors = {}  # neighbor_id: link_cost
         self.routing_table = {}  # destination_id: (next_hop_id, path_cost)
 
+
 class Network:
     def __init__(self):
         self.nodes = {}  # node_id: Node()
@@ -16,11 +17,13 @@ class Network:
         self.nodes[node1_id].neighbors[node2_id] = cost
         self.nodes[node2_id].neighbors[node1_id] = cost
 
+
 def read_topology(file_name, network):
     with open(file_name, 'r') as file:
         for line in file:
             node1_id, node2_id, cost = map(int, line.split())
             network.add_link(node1_id, node2_id, cost)
+
 
 def initial_routing_table_setup(network):
     for node in network.nodes.values():
@@ -28,6 +31,7 @@ def initial_routing_table_setup(network):
         node.routing_table[node.node_id] = ([node.node_id], 0)  # Path to itself
         for neighbor_id, cost in node.neighbors.items():
             node.routing_table[neighbor_id] = ([neighbor_id], cost)  # Direct neighbor path
+
 
 def update_distance_vectors(network):
     # Flag to track if any updates were made in the current iteration
@@ -51,6 +55,7 @@ def update_distance_vectors(network):
                         node.routing_table[dest] = (new_path, new_cost)
                         updated = True
 
+
 def forward_messages(file_name, network, file_path):
     with open(file_name, 'r') as msg_file, open(file_path, 'a') as out_file:
         for line in msg_file:
@@ -64,6 +69,7 @@ def forward_messages(file_name, network, file_path):
                 out_file.write(f"from {source_id} to {dest_id} cost infinite hops unreachable message {message.strip()}\n")
         out_file.write("\n")  # Newline for readability before any changes
 
+
 def read_changes(change_file):
     changes = []
     with open(change_file, 'r') as file:
@@ -74,6 +80,7 @@ def read_changes(change_file):
                 changes.append((node1_id, node2_id, cost))
     return changes
 
+
 def apply_change(network, node1_id, node2_id, cost):
     if cost == -999:  # Link removal
         if node1_id in network.nodes and node2_id in network.nodes[node1_id].neighbors:
@@ -82,6 +89,7 @@ def apply_change(network, node1_id, node2_id, cost):
     else:  # Link addition or update
         network.nodes[node1_id].neighbors[node2_id] = cost
         network.nodes[node2_id].neighbors[node1_id] = cost
+
 
 def write_forwarding_tables(network, file_path):
     with open(file_path, 'a') as file:
@@ -94,10 +102,15 @@ def write_forwarding_tables(network, file_path):
                 file.write(f"{dest_id} {next_hop} {cost}\n")
             file.write("\n")  # Newline for readability between node entries
 
+
 def main(topology_file, message_file, change_file, output_file):
+    # Open output file and erase file content if there are any
+    with open(output_file, 'w') as file:
+        file.truncate()
+
     network = Network()
     read_topology(topology_file, network)
-    initial_routing_table_setup(network)  # Ensure this function sets up initial routing tables
+    initial_routing_table_setup(network)
     update_distance_vectors(network)
     
     # Write initial forwarding tables and message forwarding outcomes
@@ -111,6 +124,7 @@ def main(topology_file, message_file, change_file, output_file):
         update_distance_vectors(network)
         write_forwarding_tables(network, output_file)  # Append updated forwarding tables
         forward_messages(message_file, network, output_file)  # Append updated message outcomes
+
 
 if __name__ == "__main__":
     import sys
