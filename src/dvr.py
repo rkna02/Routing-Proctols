@@ -1,233 +1,237 @@
 """
 @file dvr.py
 
-@brief This file contains implementations for Distance Vector Routing algorithms.
-This module defines classes and functions related to Distance Vector Routing algorithms.
+@brief This file contains classes, functions, and their implementations for Distance Vector Routing algorithms.
 
 @author Peter Na (rkna02)
-@author Eason Feng (Eason1223)
+@author Eason Feng (eason1223)
 
 @bug No known bugs
 """
 
 
-class Node:
+import sys
+import copy
+
+
+class NetworkSimulator:
     """
-    @brief Represents a node in the graph network.
+    @brief Simulates network behavior using the Distance Vector Routing algorithm.
 
-    This class represents a node in the network participating in distance vector routing.
-    """
-
-    def __init__(self, node_id):
-        self.node_id = node_id
-        self.neighbors = {}  # neighbor_id: link_cost
-        self.routing_table = {}  # destination_id: (next_hop_id, path_cost)
-
-
-class Network:
-    """
-    @brief Represents a network of nodes.
-
-    This class represents a graph network of nodes.
+    This class reads network topology, messages, and changes from files, and updates routing tables accordingly. It also
+    simulates message forwarding based on the current network state. 
     """
 
-    def __init__(self):
-        self.nodes = {}  # node_id: Node()
 
-    def add_link(self, node1_id, node2_id, cost):
+    def __init__(self, topology_file, messages_file, changes_file):
         """
-        @brief Adds a link between two nodes in the network.
+        @brief Initializes the NetworkSimulator object.
+        topology: map mapping nodes to each other including their path costs
+        messages: array of tuples containing source node, destination node, and actual message
+        changes: array of tuples containing 2 nodes and their updated path cost
+        routing_tables: 2D array with each entry being the cost and next hop of one node to another
 
-        @param node1_id: The ID of the first node.
-        @param node2_id: The ID of the second node.
-        @param cost: The cost of the link.
+        @param topology_file: The path to the file containing network topology.
+        @param messages_file: The path to the file containing messages to be sent.
+        @param changes_file: The path to the file containing changes to the network topology.
 
         @return Void
         """
-        if node1_id not in self.nodes:
-            self.nodes[node1_id] = Node(node1_id)
-        if node2_id not in self.nodes:
-            self.nodes[node2_id] = Node(node2_id)
-        self.nodes[node1_id].neighbors[node2_id] = cost
-        self.nodes[node2_id].neighbors[node1_id] = cost
+        self.topology = self.read_topology(topology_file)
+        self.messages = self.read_messages(messages_file)
+        self.changes = self.read_changes(changes_file)
+        self.routing_tables = {node: {node: (0, node)} for node in self.topology}
 
 
-def read_topology(file_name, network):
-    """
-    @brief Reads the network topology from a file and constructs the internal network object.
+    def read_topology(self, file_path):
+        """
+        @brief Reads network topology from initial topology file into the topology map, and set path costs for nodes
 
-    @param file_name: The name of the file containing the topology.
-    @param network: The Network object to store the topology.
-
-    @return Void
-    """
-    with open(file_name, 'r') as file:
-        for line in file:
-            node1_id, node2_id, cost = map(int, line.split())
-            network.add_link(node1_id, node2_id, cost)
-
-
-def initial_routing_table_setup(network):
-    """
-    @brief Initializes the routing table for each node in the network.
-
-    @param network: The Network object containing nodes.
-
-    @return Void 
-    """
-    for node in network.nodes.values():
-        # Initialize the routing table for direct connections
-        node.routing_table[node.node_id] = ([node.node_id], 0)  # Path to itself
-        for neighbor_id, cost in node.neighbors.items():
-            node.routing_table[neighbor_id] = ([neighbor_id], cost)  # Direct neighbor path
+        @param file_path: The path to the file containing network topology.
+        
+        @return: A map representing the network topology.
+        """
+        topology = {}
+        with open(file_path, 'r') as file:
+            for line in file:
+                node1, node2, cost = line.strip().split()
+                cost = int(cost)
+                topology.setdefault(node1, {})[node2] = cost
+                topology.setdefault(node2, {})[node1] = cost
+        return topology
 
 
-def update_distance_vectors(network):
-    """
-    @brief Updates the distance vectors for each node in the network.
+    def read_messages(self, file_path):
+        """
+        @brief Reads messages from a file and parses them into the messages array
 
-    @param network: The Network object containing nodes.
+        @param file_path: The path to the file containing messages.
 
-    @return Void
-    """
-    updated = True  # Flag to track if any updates were made in the current iteration
+        @return: An array of tuples representing messages.
+        """
+        messages = []
+        with open(file_path, 'r') as file:
+            for line in file:
+                source, destination, message = line.strip().split(' ', 2)
+                messages.append((source, destination, message))
+        return messages
 
-    while updated:
+
+    def read_changes(self, file_path):
+        """
+        @brief Reads changes to the network topology from a file and parses them into the changes array
+
+        @param file_path: The path to the file containing changes.
+
+        @return: An array of tuples representing changes.
+        """
+        changes = []
+        with open(file_path, 'r') as file:
+            for line in file:
+                node1, node2, cost = line.strip().split()
+                changes.append((node1, node2, int(cost)))
+        return changes
+
+
+    def dvr_convergence(self):
+        """
+        @brief Performs Distance Vector Routing convergence when there is a network change applied.
+        Keeps updating routing tables until no more changes were applied after an iteration 
+
+        @return Void
+        """
+        changed = True
+        while changed:
+            changed = False
+            # Copy the current state of routing tables to compare after potential updates
+            previous_routing_tables = copy.deepcopy(self.routing_tables)
+            for node, neighbors in self.topology.items():
+                # updates routing tables based on nodes' neighbors
+                if self.update_routing_table(node, neighbors):
+                    changed = True
+            # Check if any routing table has actually changed
+            if previous_routing_tables == self.routing_tables:
+                changed = False
+
+
+    def update_routing_table(self, node, neighbors):
+        """
+        @brief Updates the routing table for a node based on its neighbors and path costs to neighbors
+
+        @param node: The node for which to update the routing table.
+        @param neighbors: The neighbors of the node.
+        @return: True if the routing table was updated, False otherwise.
+        """
         updated = False
-        # Iterate over all nodes in the network
-        for node in network.nodes.values():
-            # Iterate over all neighbors of the current node
-            for neighbor_id, link_cost in node.neighbors.items():
-                neighbor = network.nodes[neighbor_id]
-                # Iterate over all destination entries in the neighbor's routing table
-                for dest, (neighbor_path, path_cost) in neighbor.routing_table.items():
-                    # Calculate new cost to destination via this neighbor
-                    new_cost = link_cost + path_cost
-                    # If the destination is not in the node's routing table or a cheaper path is found
-                    if dest not in node.routing_table or node.routing_table[dest][1] > new_cost:
-                        # Create a new path that includes this node and the path from the neighbor
-                        new_path = [node.node_id] + neighbor_path
-                        # Update the node's routing table with this new path and its total cost
-                        node.routing_table[dest] = (new_path, new_cost)
+        for neighbor, link_cost in neighbors.items():
+            for dest, (neighbor_total_cost, next_hop) in self.routing_tables[neighbor].items():
+                new_cost = link_cost + neighbor_total_cost
+                # Check if a better path is found or if the same-cost path has a lower next-hop ID
+                if dest not in self.routing_tables[node] or new_cost < self.routing_tables[node][dest][0]:
+                    self.routing_tables[node][dest] = (new_cost, neighbor)
+                    updated = True
+                elif new_cost == self.routing_tables[node][dest][0]:
+                    # Tie breaking: only update if the new next-hop ID is lower
+                    if neighbor < next_hop:
+                        self.routing_tables[node][dest] = (new_cost, neighbor)
                         updated = True
+        return updated
 
 
-def forward_messages(file_name, network, file_path):
-    """
-    @brief Forwards messages from source to destination nodes in the network. Writes the message outputs to file_path 
+    def simulate_messages(self):
+        """
+        @brief Simulates message forwarding in the network by traversing the next hops of path nodes
 
-    @param file_name: The name of the file containing messages.
-    @param network: The Network object containing nodes.
-    @param file_path: The path of the output file to write message forwarding results.
-
-    @return Void
-    """
-    with open(file_name, 'r') as msg_file, open(file_path, 'a') as out_file:
-        for line in msg_file:
-            source_id, dest_id, message = line.split(maxsplit=2)
-            source_id, dest_id = int(source_id), int(dest_id)
-            if dest_id in network.nodes[source_id].routing_table:
-                path, cost = network.nodes[source_id].routing_table[dest_id]
-                hops = " ".join(map(str, path[:-1]))  # Path excluding the destination
-                out_file.write(f"from {source_id} to {dest_id} cost {cost} hops {hops} message {message.strip()}\n")
+        @return: A list of strings representing the simulated messages sent with source, destination, cost, and hop path.
+        """
+        message_paths = []
+        for source, destination, message_text in self.messages:
+            if destination in self.routing_tables[source]:
+                path_cost, _ = self.routing_tables[source][destination]
+                path = [source]
+                next_hop = self.routing_tables[source][destination][1]
+                while next_hop != destination:
+                    path.append(next_hop)
+                    next_hop = self.routing_tables[next_hop][destination][1]
+                # Adjusting the path output to exclude the destination and match the example
+                hops_path = ' '.join(path) if len(path) > 1 else "unreachable"
+                message_paths.append(f"from {source} to {destination} cost {path_cost} hops {hops_path} message {message_text}")
             else:
-                out_file.write(f"from {source_id} to {dest_id} cost infinite hops unreachable message {message.strip()}\n")
-        out_file.write("\n")  # Newline for readability before any changes
+                message_paths.append(f"from {source} to {destination} cost infinite hops unreachable message {message_text}")
+        return message_paths
 
 
-def read_changes(change_file):
+    def print_routing_table(self, file=None):
+        """
+        @brief Writes the routing tables of nodes in sorted order (by node ID) to a file.
+
+        @param file: The file to print the routing tables to. If None, prints to standard output.
+
+        @return Void
+        """
+        for node in sorted(self.routing_tables.keys()):
+            for destination in sorted(self.routing_tables[node].keys()):
+                cost, next_hop = self.routing_tables[node][destination]
+                print(f"{destination} {next_hop} {cost}", file=file)
+            print(file=file)
+
+
+    def run_simulation(self, output_file):
+        """
+        @brief Runs the network simulation, send messages, apply network changes, and writes each node's forwarding table and messages sent to the output file.
+
+        @param output_file: The path to the output file.
+
+        @return Void
+        """
+        with open(output_file, 'w') as f:
+            self.dvr_convergence()
+            # Print the initial routing tables directly without a preceding newline.
+            self.print_routing_table(f)
+            
+            # Simulate and print initial messages.
+            initial_message_simulation = self.simulate_messages()
+            if initial_message_simulation:
+                # Print a newline only if there are initial messages to ensure separation.
+                print("\n".join(initial_message_simulation), file=f)
+
+            for change in self.changes:
+                node1, node2, new_cost = change
+                if new_cost == -999:
+                    self.topology[node1].pop(node2, None)
+                    self.topology[node2].pop(node1, None)
+                else:
+                    self.topology[node1][node2] = new_cost
+                    self.topology[node2][node1] = new_cost
+
+                self.routing_tables = {node: {node: (0, node)} for node in self.topology}
+                self.dvr_convergence()
+
+                # The newline is printed here to separate the sections correctly.
+                print(file=f)
+
+                self.print_routing_table(f)
+
+                # Simulate and print messages after change.
+                messages_after_change = self.simulate_messages()
+                if messages_after_change:
+                    # Print a newline only if there are messages after the change to ensure proper separation.
+                    print("\n".join(messages_after_change), file=f)
+
+def main(argv):
     """
-    @brief Reads changes to the network topology from the change file.
+    @brief Main function to start the network simulation.
 
-    @param change_file: The name of the file containing changes.
-
-    @return: A list of tuples representing the changes.
-    """
-    changes = []
-    with open(change_file, 'r') as file:
-        for line in file:
-            parts = line.split()
-            if len(parts) == 3:
-                node1_id, node2_id, cost = map(int, parts)
-                changes.append((node1_id, node2_id, cost))
-    return changes
-
-
-def apply_change(network, node1_id, node2_id, cost):
-    """
-    @brief Applies a network link change to the network topology.
-
-    @param network: The Network object containing nodes.
-    @param node1_id: The ID of the first node in the change.
-    @param node2_id: The ID of the second node in the change.
-    @param cost: The cost of the link between the nodes (-999 for link removal).
+    @param argv: Command line arguments.
 
     @return Void
     """
-    if cost == -999:  # Link removal
-        if node1_id in network.nodes and node2_id in network.nodes[node1_id].neighbors:
-            del network.nodes[node1_id].neighbors[node2_id]
-            del network.nodes[node2_id].neighbors[node1_id]
-    else:  # Link addition or update
-        network.nodes[node1_id].neighbors[node2_id] = cost
-        network.nodes[node2_id].neighbors[node1_id] = cost
-
-
-def write_forwarding_tables(network, file_path):
-    """
-    @brief Writes forwarding tables to an output file.
-
-    @param network: The Network object containing nodes.
-    @param file_path: The path of the output file to write forwarding tables.
-
-    @return Void
-    """
-    with open(file_path, 'a') as file:
-        for node_id in sorted(network.nodes):
-            node = network.nodes[node_id]
-            for dest_id in sorted(node.routing_table):
-                path, cost = node.routing_table[dest_id]
-                # Extract next hop from path
-                next_hop = path[1] if len(path) > 1 else node_id
-                file.write(f"{dest_id} {next_hop} {cost}\n")
-            file.write("\n")  # Newline for readability between node entries
-
-
-def main(topology_file, message_file, change_file, output_file):
-    """
-    @brief Main function to run the Distance Vector Routing algorithm.
-
-    @param topology_file: The name of the file containing the network topology.
-    @param message_file: The name of the file containing messages to forward.
-    @param change_file: The name of the file containing changes to the network topology.
-    @param output_file: The path of the output file to write results.
-
-    @return Void
-    """
-    # Open output file and erase file content if there are any
-    with open(output_file, 'w') as file:
-        file.truncate()
-
-    network = Network()
-    read_topology(topology_file, network)
-    initial_routing_table_setup(network)
-    update_distance_vectors(network)
-    
-    # Write initial forwarding tables and message forwarding outcomes
-    write_forwarding_tables(network, output_file)
-    forward_messages(message_file, network, output_file)
-
-    # Handle changes
-    changes = read_changes(change_file)
-    for node1_id, node2_id, cost in changes:
-        apply_change(network, node1_id, node2_id, cost)
-        update_distance_vectors(network)
-        write_forwarding_tables(network, output_file)  # Append updated forwarding tables
-        forward_messages(message_file, network, output_file)  # Append updated message outcomes
+    if len(argv) != 5:
+        sys.exit(1)
+    topology_file, messages_file, changes_file, output_file = argv[1:]
+    simulator = NetworkSimulator(topology_file, messages_file, changes_file)
+    simulator.run_simulation(output_file)
 
 
 if __name__ == "__main__":
-    import sys
-    topology_file, message_file, change_file, output_file = sys.argv[1:5]
-    main(topology_file, message_file, change_file, output_file)
-
+    main(sys.argv)
