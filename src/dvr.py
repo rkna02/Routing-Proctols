@@ -20,12 +20,17 @@ class NetworkSimulator:
 
     This class reads network topology, messages, and changes from files, and updates routing tables accordingly. It also
     simulates message forwarding based on the current network state. 
+
+    messages: array of tuples containing source node, destination node, and actual message
+    changes: array of tuples containing 2 nodes and their updated path cost
+    routing_tables: 2D array with each entry being the cost and next hop of one node to another
     """
 
 
     def __init__(self, topology_file, messages_file, changes_file):
         """
         @brief Initializes the NetworkSimulator object.
+
         topology: map mapping nodes to each other including their path costs
         messages: array of tuples containing source node, destination node, and actual message
         changes: array of tuples containing 2 nodes and their updated path cost
@@ -48,7 +53,7 @@ class NetworkSimulator:
         @brief Reads network topology from initial topology file into the topology map, and set path costs for nodes
 
         @param file_path: The path to the file containing network topology.
-        
+
         @return: A map representing the network topology.
         """
         topology = {}
