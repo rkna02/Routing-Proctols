@@ -1,4 +1,23 @@
+"""
+@file dvr.py
+
+@brief This file contains implementations for Distance Vector Routing algorithms.
+This module defines classes and functions related to Distance Vector Routing algorithms.
+
+@author Peter Na (rkna02)
+@author Eason Feng (Eason1223)
+
+@bug No known bugs
+"""
+
+
 class Node:
+    """
+    @brief Represents a node in the graph network.
+
+    This class represents a node in the network participating in distance vector routing.
+    """
+
     def __init__(self, node_id):
         self.node_id = node_id
         self.neighbors = {}  # neighbor_id: link_cost
@@ -6,10 +25,25 @@ class Node:
 
 
 class Network:
+    """
+    @brief Represents a network of nodes.
+
+    This class represents a graph network of nodes.
+    """
+
     def __init__(self):
         self.nodes = {}  # node_id: Node()
 
     def add_link(self, node1_id, node2_id, cost):
+        """
+        @brief Adds a link between two nodes in the network.
+
+        @param node1_id: The ID of the first node.
+        @param node2_id: The ID of the second node.
+        @param cost: The cost of the link.
+
+        @return Void
+        """
         if node1_id not in self.nodes:
             self.nodes[node1_id] = Node(node1_id)
         if node2_id not in self.nodes:
@@ -19,6 +53,14 @@ class Network:
 
 
 def read_topology(file_name, network):
+    """
+    @brief Reads the network topology from a file and constructs the internal network object.
+
+    @param file_name: The name of the file containing the topology.
+    @param network: The Network object to store the topology.
+
+    @return Void
+    """
     with open(file_name, 'r') as file:
         for line in file:
             node1_id, node2_id, cost = map(int, line.split())
@@ -26,6 +68,13 @@ def read_topology(file_name, network):
 
 
 def initial_routing_table_setup(network):
+    """
+    @brief Initializes the routing table for each node in the network.
+
+    @param network: The Network object containing nodes.
+
+    @return Void 
+    """
     for node in network.nodes.values():
         # Initialize the routing table for direct connections
         node.routing_table[node.node_id] = ([node.node_id], 0)  # Path to itself
@@ -34,8 +83,15 @@ def initial_routing_table_setup(network):
 
 
 def update_distance_vectors(network):
-    # Flag to track if any updates were made in the current iteration
-    updated = True
+    """
+    @brief Updates the distance vectors for each node in the network.
+
+    @param network: The Network object containing nodes.
+
+    @return Void
+    """
+    updated = True  # Flag to track if any updates were made in the current iteration
+
     while updated:
         updated = False
         # Iterate over all nodes in the network
@@ -57,6 +113,15 @@ def update_distance_vectors(network):
 
 
 def forward_messages(file_name, network, file_path):
+    """
+    @brief Forwards messages from source to destination nodes in the network. Writes the message outputs to file_path 
+
+    @param file_name: The name of the file containing messages.
+    @param network: The Network object containing nodes.
+    @param file_path: The path of the output file to write message forwarding results.
+
+    @return Void
+    """
     with open(file_name, 'r') as msg_file, open(file_path, 'a') as out_file:
         for line in msg_file:
             source_id, dest_id, message = line.split(maxsplit=2)
@@ -71,6 +136,13 @@ def forward_messages(file_name, network, file_path):
 
 
 def read_changes(change_file):
+    """
+    @brief Reads changes to the network topology from the change file.
+
+    @param change_file: The name of the file containing changes.
+
+    @return: A list of tuples representing the changes.
+    """
     changes = []
     with open(change_file, 'r') as file:
         for line in file:
@@ -82,6 +154,16 @@ def read_changes(change_file):
 
 
 def apply_change(network, node1_id, node2_id, cost):
+    """
+    @brief Applies a network link change to the network topology.
+
+    @param network: The Network object containing nodes.
+    @param node1_id: The ID of the first node in the change.
+    @param node2_id: The ID of the second node in the change.
+    @param cost: The cost of the link between the nodes (-999 for link removal).
+
+    @return Void
+    """
     if cost == -999:  # Link removal
         if node1_id in network.nodes and node2_id in network.nodes[node1_id].neighbors:
             del network.nodes[node1_id].neighbors[node2_id]
@@ -92,6 +174,14 @@ def apply_change(network, node1_id, node2_id, cost):
 
 
 def write_forwarding_tables(network, file_path):
+    """
+    @brief Writes forwarding tables to an output file.
+
+    @param network: The Network object containing nodes.
+    @param file_path: The path of the output file to write forwarding tables.
+
+    @return Void
+    """
     with open(file_path, 'a') as file:
         for node_id in sorted(network.nodes):
             node = network.nodes[node_id]
@@ -104,6 +194,16 @@ def write_forwarding_tables(network, file_path):
 
 
 def main(topology_file, message_file, change_file, output_file):
+    """
+    @brief Main function to run the Distance Vector Routing algorithm.
+
+    @param topology_file: The name of the file containing the network topology.
+    @param message_file: The name of the file containing messages to forward.
+    @param change_file: The name of the file containing changes to the network topology.
+    @param output_file: The path of the output file to write results.
+
+    @return Void
+    """
     # Open output file and erase file content if there are any
     with open(output_file, 'w') as file:
         file.truncate()

@@ -1,0 +1,65 @@
+\doxysection{lsr Namespace Reference}
+\hypertarget{namespacelsr}{}\label{namespacelsr}\index{lsr@{lsr}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classlsr_1_1_network}{Network}}
+\item 
+class \mbox{\hyperlink{classlsr_1_1_node}{Node}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{namespacelsr_ad53e97794e0f74b3d031437f44aaa449}\label{namespacelsr_ad53e97794e0f74b3d031437f44aaa449} 
+{\bfseries dijkstra} (network, start\+\_\+id)
+\item 
+\Hypertarget{namespacelsr_ac0b6bd3a31e5a02b6770c2212b333013}\label{namespacelsr_ac0b6bd3a31e5a02b6770c2212b333013} 
+{\bfseries build\+\_\+routing\+\_\+tables} (network)
+\item 
+\Hypertarget{namespacelsr_a1aed4aef077a3e14e0f9209690735c35}\label{namespacelsr_a1aed4aef077a3e14e0f9209690735c35} 
+{\bfseries read\+\_\+topology} (file\+\_\+name, network)
+\item 
+\Hypertarget{namespacelsr_a8228e81fa3daaa2cff71448f5cc87226}\label{namespacelsr_a8228e81fa3daaa2cff71448f5cc87226} 
+{\bfseries forward\+\_\+messages} (file\+\_\+name, routing\+\_\+tables, file\+\_\+path)
+\item 
+\Hypertarget{namespacelsr_a7e18af463dd24ef02bcb69b8f6406a8c}\label{namespacelsr_a7e18af463dd24ef02bcb69b8f6406a8c} 
+{\bfseries read\+\_\+changes} (change\+\_\+file)
+\item 
+\Hypertarget{namespacelsr_a3935f070b7d72c58108436634d9f9059}\label{namespacelsr_a3935f070b7d72c58108436634d9f9059} 
+{\bfseries apply\+\_\+change} (network, node1\+\_\+id, node2\+\_\+id, cost)
+\item 
+\Hypertarget{namespacelsr_a8d1f7042c40b232c69f1322ff87d55bc}\label{namespacelsr_a8d1f7042c40b232c69f1322ff87d55bc} 
+{\bfseries write\+\_\+forwarding\+\_\+tables} (routing\+\_\+tables, file\+\_\+path)
+\item 
+\Hypertarget{namespacelsr_aba76c2f5ab20155892a44ded523b14db}\label{namespacelsr_aba76c2f5ab20155892a44ded523b14db} 
+{\bfseries main} (topology\+\_\+file, message\+\_\+file, change\+\_\+file, output\+\_\+file)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{namespacelsr_a5a1197f9aed2611bf03d5be18a6234f9}\label{namespacelsr_a5a1197f9aed2611bf03d5be18a6234f9} 
+{\bfseries topology\+\_\+file}
+\item 
+\Hypertarget{namespacelsr_aed4b0aa63de42bdc442e149ae7b29648}\label{namespacelsr_aed4b0aa63de42bdc442e149ae7b29648} 
+{\bfseries message\+\_\+file}
+\item 
+\Hypertarget{namespacelsr_abe15d69daa26def8d3ecb42d248d227c}\label{namespacelsr_abe15d69daa26def8d3ecb42d248d227c} 
+{\bfseries change\+\_\+file}
+\item 
+\Hypertarget{namespacelsr_ab744c9efff9697d3a741515693d4a04c}\label{namespacelsr_ab744c9efff9697d3a741515693d4a04c} 
+{\bfseries output\+\_\+file}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}@file dvr.py
+
+@brief This file contains implementations for Distance Vector Routing algorithms.
+This module defines classes and functions related to Distance Vector Routing algorithms.
+
+@author Peter Na (rkna02)
+@author Eason Feng (Eason1223)
+
+@bug No known bugs
+\end{DoxyVerb}
+ 

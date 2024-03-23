@@ -1,3 +1,17 @@
+
+"""
+@file dvr.py
+
+@brief This file contains implementations for Distance Vector Routing algorithms.
+This module defines classes and functions related to Distance Vector Routing algorithms.
+
+@author Peter Na (rkna02)
+@author Eason Feng (Eason1223)
+
+@bug No known bugs
+"""
+
+
 import heapq
 
 
