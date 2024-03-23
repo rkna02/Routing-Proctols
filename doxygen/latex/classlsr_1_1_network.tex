@@ -6,8 +6,7 @@
 \Hypertarget{classlsr_1_1_network_ab2e2789226b9154fb53eedc25140d182}\label{classlsr_1_1_network_ab2e2789226b9154fb53eedc25140d182} 
 {\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self)
 \item 
-\Hypertarget{classlsr_1_1_network_a550b6e215463ff935e735b5acba8d61a}\label{classlsr_1_1_network_a550b6e215463ff935e735b5acba8d61a} 
-{\bfseries add\+\_\+link} (self, node1\+\_\+id, node2\+\_\+id, cost)
+\mbox{\hyperlink{classlsr_1_1_network_a550b6e215463ff935e735b5acba8d61a}{add\+\_\+link}} (self, node1\+\_\+id, node2\+\_\+id, cost)
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
@@ -16,6 +15,30 @@
 {\bfseries nodes}
 \end{DoxyCompactItemize}
 
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}@brief Represents the entire network.
+
+@param nodes: Dictionary containing all nodes in the network, mapping node Id to node object
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classlsr_1_1_network_a550b6e215463ff935e735b5acba8d61a}\label{classlsr_1_1_network_a550b6e215463ff935e735b5acba8d61a} 
+\index{lsr.Network@{lsr.Network}!add\_link@{add\_link}}
+\index{add\_link@{add\_link}!lsr.Network@{lsr.Network}}
+\doxysubsubsection{\texorpdfstring{add\_link()}{add\_link()}}
+{\footnotesize\ttfamily lsr.\+Network.\+add\+\_\+link (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{node1\+\_\+id,  }\item[{}]{node2\+\_\+id,  }\item[{}]{cost }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Adds a link between two nodes in the network to their link attribute.
+
+@param node1_id: The identifier of the first node.
+@param node2_id: The identifier of the second node.
+@param cost: The cost of the link between the nodes.
+
+@return Void
+\end{DoxyVerb}
+ 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 

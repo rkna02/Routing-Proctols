@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['add_5flink_0',['add_link',['../classdvr_1_1_network.html#acf63fdc3af58d7e821b041a91a1f0cb0',1,'dvr::Network']]],
-  ['apply_5fchange_1',['apply_change',['../namespacedvr.html#abb1393ef6880d7c5730d0494cf81a655',1,'dvr']]]
+  ['_5f_5finit_5f_5f_0',['__init__',['../classdvr_1_1_network_simulator.html#a7562fe8dbdd3a3c1e9e548a12724b5a7',1,'dvr::NetworkSimulator']]]
 ];

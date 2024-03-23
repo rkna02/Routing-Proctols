@@ -1,0 +1,173 @@
+\doxysection{dvr.\+Network\+Simulator Class Reference}
+\hypertarget{classdvr_1_1_network_simulator}{}\label{classdvr_1_1_network_simulator}\index{dvr.NetworkSimulator@{dvr.NetworkSimulator}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classdvr_1_1_network_simulator_a7562fe8dbdd3a3c1e9e548a12724b5a7}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, topology\+\_\+file, messages\+\_\+file, changes\+\_\+file)
+\item 
+\mbox{\hyperlink{classdvr_1_1_network_simulator_a091a6bf07cc55c589d4332baeb9badee}{read\+\_\+topology}} (self, file\+\_\+path)
+\item 
+\mbox{\hyperlink{classdvr_1_1_network_simulator_a0cec06c7095e69d4238c3acd523f9cb0}{read\+\_\+messages}} (self, file\+\_\+path)
+\item 
+\mbox{\hyperlink{classdvr_1_1_network_simulator_af943d1954d28b15b2c1f03b4102c2178}{read\+\_\+changes}} (self, file\+\_\+path)
+\item 
+\mbox{\hyperlink{classdvr_1_1_network_simulator_a00fbd0466a4477ec5cec24f65d1c774b}{dvr\+\_\+convergence}} (self)
+\item 
+\mbox{\hyperlink{classdvr_1_1_network_simulator_a9a8e538b290899bc0772bb9a66f9f609}{update\+\_\+routing\+\_\+table}} (self, node, neighbors)
+\item 
+\mbox{\hyperlink{classdvr_1_1_network_simulator_aa962c0fc8296bf79aa7f0ce1a166068f}{simulate\+\_\+messages}} (self)
+\item 
+\mbox{\hyperlink{classdvr_1_1_network_simulator_a84dc4a6f62c06310c6cd4a3f5d6f6cdf}{print\+\_\+routing\+\_\+table}} (self, file=None)
+\item 
+\mbox{\hyperlink{classdvr_1_1_network_simulator_a3a7362a0a1c58a1f1ee8851c6ce426e7}{run\+\_\+simulation}} (self, output\+\_\+file)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classdvr_1_1_network_simulator_a140e48a118750b0c91cc77803d41576e}\label{classdvr_1_1_network_simulator_a140e48a118750b0c91cc77803d41576e} 
+{\bfseries topology}
+\item 
+\Hypertarget{classdvr_1_1_network_simulator_ae8515df35c0d78a5d414509994035eaa}\label{classdvr_1_1_network_simulator_ae8515df35c0d78a5d414509994035eaa} 
+{\bfseries messages}
+\item 
+\Hypertarget{classdvr_1_1_network_simulator_a30fa9b2a65eb9d2d38ebb6fe4467726e}\label{classdvr_1_1_network_simulator_a30fa9b2a65eb9d2d38ebb6fe4467726e} 
+{\bfseries changes}
+\item 
+\Hypertarget{classdvr_1_1_network_simulator_af9f23da358fcb97531f5568b185ddfc8}\label{classdvr_1_1_network_simulator_af9f23da358fcb97531f5568b185ddfc8} 
+{\bfseries routing\+\_\+tables}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}@brief Simulates network behavior using the Distance Vector Routing algorithm.
+
+This class reads network topology, messages, and changes from files, and updates routing tables accordingly. It also
+simulates message forwarding based on the current network state. 
+
+messages: array of tuples containing source node, destination node, and actual message
+changes: array of tuples containing 2 nodes and their updated path cost
+routing_tables: 2D array with each entry being the cost and next hop of one node to another
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classdvr_1_1_network_simulator_a7562fe8dbdd3a3c1e9e548a12724b5a7}\label{classdvr_1_1_network_simulator_a7562fe8dbdd3a3c1e9e548a12724b5a7} 
+\index{dvr.NetworkSimulator@{dvr.NetworkSimulator}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!dvr.NetworkSimulator@{dvr.NetworkSimulator}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily dvr.\+Network\+Simulator.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{topology\+\_\+file,  }\item[{}]{messages\+\_\+file,  }\item[{}]{changes\+\_\+file }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Initializes the NetworkSimulator object.
+
+topology: map mapping nodes to each other including their path costs
+messages: array of tuples containing source node, destination node, and actual message
+changes: array of tuples containing 2 nodes and their updated path cost
+routing_tables: 2D array with each entry being the cost and next hop of one node to another
+
+@param topology_file: The path to the file containing network topology.
+@param messages_file: The path to the file containing messages to be sent.
+@param changes_file: The path to the file containing changes to the network topology.
+
+@return Void
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classdvr_1_1_network_simulator_a00fbd0466a4477ec5cec24f65d1c774b}\label{classdvr_1_1_network_simulator_a00fbd0466a4477ec5cec24f65d1c774b} 
+\index{dvr.NetworkSimulator@{dvr.NetworkSimulator}!dvr\_convergence@{dvr\_convergence}}
+\index{dvr\_convergence@{dvr\_convergence}!dvr.NetworkSimulator@{dvr.NetworkSimulator}}
+\doxysubsubsection{\texorpdfstring{dvr\_convergence()}{dvr\_convergence()}}
+{\footnotesize\ttfamily dvr.\+Network\+Simulator.\+dvr\+\_\+convergence (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Performs Distance Vector Routing convergence when there is a network change applied.
+Keeps updating routing tables until no more changes were applied after an iteration 
+
+@return Void
+\end{DoxyVerb}
+ \Hypertarget{classdvr_1_1_network_simulator_a84dc4a6f62c06310c6cd4a3f5d6f6cdf}\label{classdvr_1_1_network_simulator_a84dc4a6f62c06310c6cd4a3f5d6f6cdf} 
+\index{dvr.NetworkSimulator@{dvr.NetworkSimulator}!print\_routing\_table@{print\_routing\_table}}
+\index{print\_routing\_table@{print\_routing\_table}!dvr.NetworkSimulator@{dvr.NetworkSimulator}}
+\doxysubsubsection{\texorpdfstring{print\_routing\_table()}{print\_routing\_table()}}
+{\footnotesize\ttfamily dvr.\+Network\+Simulator.\+print\+\_\+routing\+\_\+table (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{file = {\ttfamily None} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Writes the routing tables of nodes in sorted order (by node ID) to a file.
+
+@param file: The file to print the routing tables to. If None, prints to standard output.
+
+@return Void
+\end{DoxyVerb}
+ \Hypertarget{classdvr_1_1_network_simulator_af943d1954d28b15b2c1f03b4102c2178}\label{classdvr_1_1_network_simulator_af943d1954d28b15b2c1f03b4102c2178} 
+\index{dvr.NetworkSimulator@{dvr.NetworkSimulator}!read\_changes@{read\_changes}}
+\index{read\_changes@{read\_changes}!dvr.NetworkSimulator@{dvr.NetworkSimulator}}
+\doxysubsubsection{\texorpdfstring{read\_changes()}{read\_changes()}}
+{\footnotesize\ttfamily dvr.\+Network\+Simulator.\+read\+\_\+changes (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{file\+\_\+path }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Reads changes to the network topology from a file and parses them into the changes array
+
+@param file_path: The path to the file containing changes.
+
+@return: An array of tuples representing changes.
+\end{DoxyVerb}
+ \Hypertarget{classdvr_1_1_network_simulator_a0cec06c7095e69d4238c3acd523f9cb0}\label{classdvr_1_1_network_simulator_a0cec06c7095e69d4238c3acd523f9cb0} 
+\index{dvr.NetworkSimulator@{dvr.NetworkSimulator}!read\_messages@{read\_messages}}
+\index{read\_messages@{read\_messages}!dvr.NetworkSimulator@{dvr.NetworkSimulator}}
+\doxysubsubsection{\texorpdfstring{read\_messages()}{read\_messages()}}
+{\footnotesize\ttfamily dvr.\+Network\+Simulator.\+read\+\_\+messages (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{file\+\_\+path }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Reads messages from a file and parses them into the messages array
+
+@param file_path: The path to the file containing messages.
+
+@return: An array of tuples representing messages.
+\end{DoxyVerb}
+ \Hypertarget{classdvr_1_1_network_simulator_a091a6bf07cc55c589d4332baeb9badee}\label{classdvr_1_1_network_simulator_a091a6bf07cc55c589d4332baeb9badee} 
+\index{dvr.NetworkSimulator@{dvr.NetworkSimulator}!read\_topology@{read\_topology}}
+\index{read\_topology@{read\_topology}!dvr.NetworkSimulator@{dvr.NetworkSimulator}}
+\doxysubsubsection{\texorpdfstring{read\_topology()}{read\_topology()}}
+{\footnotesize\ttfamily dvr.\+Network\+Simulator.\+read\+\_\+topology (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{file\+\_\+path }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Reads network topology from initial topology file into the topology map, and set path costs for nodes
+
+@param file_path: The path to the file containing network topology.
+
+@return: A map representing the network topology.
+\end{DoxyVerb}
+ \Hypertarget{classdvr_1_1_network_simulator_a3a7362a0a1c58a1f1ee8851c6ce426e7}\label{classdvr_1_1_network_simulator_a3a7362a0a1c58a1f1ee8851c6ce426e7} 
+\index{dvr.NetworkSimulator@{dvr.NetworkSimulator}!run\_simulation@{run\_simulation}}
+\index{run\_simulation@{run\_simulation}!dvr.NetworkSimulator@{dvr.NetworkSimulator}}
+\doxysubsubsection{\texorpdfstring{run\_simulation()}{run\_simulation()}}
+{\footnotesize\ttfamily dvr.\+Network\+Simulator.\+run\+\_\+simulation (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{output\+\_\+file }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Runs the network simulation, send messages, apply network changes, and writes each node's forwarding table and messages sent to the output file.
+
+@param output_file: The path to the output file.
+
+@return Void
+\end{DoxyVerb}
+ \Hypertarget{classdvr_1_1_network_simulator_aa962c0fc8296bf79aa7f0ce1a166068f}\label{classdvr_1_1_network_simulator_aa962c0fc8296bf79aa7f0ce1a166068f} 
+\index{dvr.NetworkSimulator@{dvr.NetworkSimulator}!simulate\_messages@{simulate\_messages}}
+\index{simulate\_messages@{simulate\_messages}!dvr.NetworkSimulator@{dvr.NetworkSimulator}}
+\doxysubsubsection{\texorpdfstring{simulate\_messages()}{simulate\_messages()}}
+{\footnotesize\ttfamily dvr.\+Network\+Simulator.\+simulate\+\_\+messages (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Simulates message forwarding in the network by traversing the next hops of path nodes
+
+@return: A list of strings representing the simulated messages sent with source, destination, cost, and hop path.
+\end{DoxyVerb}
+ \Hypertarget{classdvr_1_1_network_simulator_a9a8e538b290899bc0772bb9a66f9f609}\label{classdvr_1_1_network_simulator_a9a8e538b290899bc0772bb9a66f9f609} 
+\index{dvr.NetworkSimulator@{dvr.NetworkSimulator}!update\_routing\_table@{update\_routing\_table}}
+\index{update\_routing\_table@{update\_routing\_table}!dvr.NetworkSimulator@{dvr.NetworkSimulator}}
+\doxysubsubsection{\texorpdfstring{update\_routing\_table()}{update\_routing\_table()}}
+{\footnotesize\ttfamily dvr.\+Network\+Simulator.\+update\+\_\+routing\+\_\+table (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{node,  }\item[{}]{neighbors }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Updates the routing table for a node based on its neighbors and path costs to neighbors
+
+@param node: The node for which to update the routing table.
+@param neighbors: The neighbors of the node.
+@return: True if the routing table was updated, False otherwise.
+\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/lufei/\+One\+Drive/\+Desktop/\+UBC/\+ELEC331/\+PA2/src/dvr.\+py\end{DoxyCompactItemize}

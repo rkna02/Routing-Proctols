@@ -10,29 +10,19 @@ class \mbox{\hyperlink{classlsr_1_1_node}{Node}}
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\Hypertarget{namespacelsr_ad53e97794e0f74b3d031437f44aaa449}\label{namespacelsr_ad53e97794e0f74b3d031437f44aaa449} 
-{\bfseries dijkstra} (network, start\+\_\+id)
+\mbox{\hyperlink{namespacelsr_ad53e97794e0f74b3d031437f44aaa449}{dijkstra}} (network, start\+\_\+id)
 \item 
-\Hypertarget{namespacelsr_ac0b6bd3a31e5a02b6770c2212b333013}\label{namespacelsr_ac0b6bd3a31e5a02b6770c2212b333013} 
-{\bfseries build\+\_\+routing\+\_\+tables} (network)
+\mbox{\hyperlink{namespacelsr_ac0b6bd3a31e5a02b6770c2212b333013}{build\+\_\+routing\+\_\+tables}} (network)
 \item 
-\Hypertarget{namespacelsr_a1aed4aef077a3e14e0f9209690735c35}\label{namespacelsr_a1aed4aef077a3e14e0f9209690735c35} 
-{\bfseries read\+\_\+topology} (file\+\_\+name, network)
+\mbox{\hyperlink{namespacelsr_a1aed4aef077a3e14e0f9209690735c35}{read\+\_\+topology}} (file\+\_\+name, network)
 \item 
-\Hypertarget{namespacelsr_a8228e81fa3daaa2cff71448f5cc87226}\label{namespacelsr_a8228e81fa3daaa2cff71448f5cc87226} 
-{\bfseries forward\+\_\+messages} (file\+\_\+name, routing\+\_\+tables, file\+\_\+path)
+\mbox{\hyperlink{namespacelsr_a8228e81fa3daaa2cff71448f5cc87226}{forward\+\_\+messages}} (file\+\_\+name, routing\+\_\+tables, file\+\_\+path)
 \item 
-\Hypertarget{namespacelsr_a7e18af463dd24ef02bcb69b8f6406a8c}\label{namespacelsr_a7e18af463dd24ef02bcb69b8f6406a8c} 
-{\bfseries read\+\_\+changes} (change\+\_\+file)
+\mbox{\hyperlink{namespacelsr_a7e18af463dd24ef02bcb69b8f6406a8c}{read\+\_\+changes}} (change\+\_\+file)
 \item 
-\Hypertarget{namespacelsr_a3935f070b7d72c58108436634d9f9059}\label{namespacelsr_a3935f070b7d72c58108436634d9f9059} 
-{\bfseries apply\+\_\+change} (network, node1\+\_\+id, node2\+\_\+id, cost)
+\mbox{\hyperlink{namespacelsr_a8d1f7042c40b232c69f1322ff87d55bc}{write\+\_\+forwarding\+\_\+tables}} (routing\+\_\+tables, file\+\_\+path)
 \item 
-\Hypertarget{namespacelsr_a8d1f7042c40b232c69f1322ff87d55bc}\label{namespacelsr_a8d1f7042c40b232c69f1322ff87d55bc} 
-{\bfseries write\+\_\+forwarding\+\_\+tables} (routing\+\_\+tables, file\+\_\+path)
-\item 
-\Hypertarget{namespacelsr_aba76c2f5ab20155892a44ded523b14db}\label{namespacelsr_aba76c2f5ab20155892a44ded523b14db} 
-{\bfseries main} (topology\+\_\+file, message\+\_\+file, change\+\_\+file, output\+\_\+file)
+\mbox{\hyperlink{namespacelsr_aba76c2f5ab20155892a44ded523b14db}{main}} (topology\+\_\+file, message\+\_\+file, change\+\_\+file, output\+\_\+file)
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Variables}
 \begin{DoxyCompactItemize}
@@ -52,14 +42,108 @@ class \mbox{\hyperlink{classlsr_1_1_node}{Node}}
 
 
 \doxysubsection{Detailed Description}
-\begin{DoxyVerb}@file dvr.py
+\begin{DoxyVerb}@file lsr.py
 
-@brief This file contains implementations for Distance Vector Routing algorithms.
-This module defines classes and functions related to Distance Vector Routing algorithms.
+@brief This file contains classes, functions, and implementations for Link State Routing algorithm.
 
 @author Peter Na (rkna02)
-@author Eason Feng (Eason1223)
+@author Eason Feng (eason1223)
 
 @bug No known bugs
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespacelsr_ac0b6bd3a31e5a02b6770c2212b333013}\label{namespacelsr_ac0b6bd3a31e5a02b6770c2212b333013} 
+\index{lsr@{lsr}!build\_routing\_tables@{build\_routing\_tables}}
+\index{build\_routing\_tables@{build\_routing\_tables}!lsr@{lsr}}
+\doxysubsubsection{\texorpdfstring{build\_routing\_tables()}{build\_routing\_tables()}}
+{\footnotesize\ttfamily lsr.\+build\+\_\+routing\+\_\+tables (\begin{DoxyParamCaption}\item[{}]{network }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Builds routing tables for all nodes in the network.
+
+@param network: The Network object representing the network.
+
+@return routing_tables: Dictionary containing routing tables for all nodes.
+\end{DoxyVerb}
+ \Hypertarget{namespacelsr_ad53e97794e0f74b3d031437f44aaa449}\label{namespacelsr_ad53e97794e0f74b3d031437f44aaa449} 
+\index{lsr@{lsr}!dijkstra@{dijkstra}}
+\index{dijkstra@{dijkstra}!lsr@{lsr}}
+\doxysubsubsection{\texorpdfstring{dijkstra()}{dijkstra()}}
+{\footnotesize\ttfamily lsr.\+dijkstra (\begin{DoxyParamCaption}\item[{}]{network,  }\item[{}]{start\+\_\+id }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Computes shortest paths from one node to all other nodes using Dijkstra's algorithm.
+
+@param network: The Network object representing the network.
+@param start_id: The identifier of the starting node.
+
+@return distances: Dictionary containing distances from the starting node to each node.
+@return previous_nodes: Dictionary containing previous nodes in the shortest paths.
+@return full_paths: Dictionary containing full paths from the starting node to each node.
+\end{DoxyVerb}
+ \Hypertarget{namespacelsr_a8228e81fa3daaa2cff71448f5cc87226}\label{namespacelsr_a8228e81fa3daaa2cff71448f5cc87226} 
+\index{lsr@{lsr}!forward\_messages@{forward\_messages}}
+\index{forward\_messages@{forward\_messages}!lsr@{lsr}}
+\doxysubsubsection{\texorpdfstring{forward\_messages()}{forward\_messages()}}
+{\footnotesize\ttfamily lsr.\+forward\+\_\+messages (\begin{DoxyParamCaption}\item[{}]{file\+\_\+name,  }\item[{}]{routing\+\_\+tables,  }\item[{}]{file\+\_\+path }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Forwards messages based on routing tables and writes results to an output file
+
+@param file_name: The name of the file containing messages.
+@param routing_tables: Dictionary mapping source IDs to their routing tables.
+@param file_path: The path of the output file to write the forwarded messages.
+
+@return Void
+\end{DoxyVerb}
+ \Hypertarget{namespacelsr_aba76c2f5ab20155892a44ded523b14db}\label{namespacelsr_aba76c2f5ab20155892a44ded523b14db} 
+\index{lsr@{lsr}!main@{main}}
+\index{main@{main}!lsr@{lsr}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily lsr.\+main (\begin{DoxyParamCaption}\item[{}]{topology\+\_\+file,  }\item[{}]{message\+\_\+file,  }\item[{}]{change\+\_\+file,  }\item[{}]{output\+\_\+file }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Main function to execute the link state network simulation.
+
+@brief Main function to execute the network simulation.
+
+@param topology_file: The name of the file containing network topology information.
+@param message_file: The name of the file containing messages to be forwarded.
+@param change_file: The name of the file containing changes to the network topology.
+@param output_file: The name of the output file to write the simulation results.
+\end{DoxyVerb}
+ \Hypertarget{namespacelsr_a7e18af463dd24ef02bcb69b8f6406a8c}\label{namespacelsr_a7e18af463dd24ef02bcb69b8f6406a8c} 
+\index{lsr@{lsr}!read\_changes@{read\_changes}}
+\index{read\_changes@{read\_changes}!lsr@{lsr}}
+\doxysubsubsection{\texorpdfstring{read\_changes()}{read\_changes()}}
+{\footnotesize\ttfamily lsr.\+read\+\_\+changes (\begin{DoxyParamCaption}\item[{}]{change\+\_\+file }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Reads changes to the network topology from a file.
+
+@param change_file: The name of the file containing topology changes.
+
+@return changes: List/Array of tuples representing changes in the format (node1_id, node2_id, cost).
+\end{DoxyVerb}
+ \Hypertarget{namespacelsr_a1aed4aef077a3e14e0f9209690735c35}\label{namespacelsr_a1aed4aef077a3e14e0f9209690735c35} 
+\index{lsr@{lsr}!read\_topology@{read\_topology}}
+\index{read\_topology@{read\_topology}!lsr@{lsr}}
+\doxysubsubsection{\texorpdfstring{read\_topology()}{read\_topology()}}
+{\footnotesize\ttfamily lsr.\+read\+\_\+topology (\begin{DoxyParamCaption}\item[{}]{file\+\_\+name,  }\item[{}]{network }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Reads initial topology information from a file and constructs the network object
+
+@param file_name: The name of the file containing topology information.
+@param network: The built Network object representing the network.
+
+@return Void
+\end{DoxyVerb}
+ \Hypertarget{namespacelsr_a8d1f7042c40b232c69f1322ff87d55bc}\label{namespacelsr_a8d1f7042c40b232c69f1322ff87d55bc} 
+\index{lsr@{lsr}!write\_forwarding\_tables@{write\_forwarding\_tables}}
+\index{write\_forwarding\_tables@{write\_forwarding\_tables}!lsr@{lsr}}
+\doxysubsubsection{\texorpdfstring{write\_forwarding\_tables()}{write\_forwarding\_tables()}}
+{\footnotesize\ttfamily lsr.\+write\+\_\+forwarding\+\_\+tables (\begin{DoxyParamCaption}\item[{}]{routing\+\_\+tables,  }\item[{}]{file\+\_\+path }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Writes routing tables to an output file.
+
+@param routing_tables: Dictionary containing routing tables for all nodes.
+@param file_path: The path of the output file.
 \end{DoxyVerb}
  

@@ -3,163 +3,37 @@
 \doxysubsubsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
-class \mbox{\hyperlink{classdvr_1_1_network}{Network}}
-\item 
-class \mbox{\hyperlink{classdvr_1_1_node}{Node}}
+class \mbox{\hyperlink{classdvr_1_1_network_simulator}{Network\+Simulator}}
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{namespacedvr_a24bc4b3cfd71b87a594518ece507eddb}{read\+\_\+topology}} (file\+\_\+name, network)
-\item 
-\mbox{\hyperlink{namespacedvr_adfe8792e9549fecafc0de49385dcd62f}{initial\+\_\+routing\+\_\+table\+\_\+setup}} (network)
-\item 
-\mbox{\hyperlink{namespacedvr_abad1b0ab2a9abdf21efecf9974d84ee2}{update\+\_\+distance\+\_\+vectors}} (network)
-\item 
-\mbox{\hyperlink{namespacedvr_a297c9eb18aa87fec75e422563afbbb04}{forward\+\_\+messages}} (file\+\_\+name, network, file\+\_\+path)
-\item 
-\mbox{\hyperlink{namespacedvr_a3312c1452a6ad22bb051b72cc712248e}{read\+\_\+changes}} (change\+\_\+file)
-\item 
-\mbox{\hyperlink{namespacedvr_abb1393ef6880d7c5730d0494cf81a655}{apply\+\_\+change}} (network, node1\+\_\+id, node2\+\_\+id, cost)
-\item 
-\mbox{\hyperlink{namespacedvr_adc04f22c8bb20d6df48b948aadd94a69}{write\+\_\+forwarding\+\_\+tables}} (network, file\+\_\+path)
-\item 
-\mbox{\hyperlink{namespacedvr_a4c0ff886c3d60ad042d18c22d350cf4c}{main}} (topology\+\_\+file, message\+\_\+file, change\+\_\+file, output\+\_\+file)
-\end{DoxyCompactItemize}
-\doxysubsubsection*{Variables}
-\begin{DoxyCompactItemize}
-\item 
-\Hypertarget{namespacedvr_ac1f0a9ad0e4476e608d58143351d92ae}\label{namespacedvr_ac1f0a9ad0e4476e608d58143351d92ae} 
-{\bfseries topology\+\_\+file}
-\item 
-\Hypertarget{namespacedvr_ac764b05bcae07d852b10e839f78b7804}\label{namespacedvr_ac764b05bcae07d852b10e839f78b7804} 
-{\bfseries message\+\_\+file}
-\item 
-\Hypertarget{namespacedvr_ac0b11278a4cf4288d130a9ae59da8224}\label{namespacedvr_ac0b11278a4cf4288d130a9ae59da8224} 
-{\bfseries change\+\_\+file}
-\item 
-\Hypertarget{namespacedvr_ab85a5b5c25933b423f599edfe843c4ab}\label{namespacedvr_ab85a5b5c25933b423f599edfe843c4ab} 
-{\bfseries output\+\_\+file}
+\mbox{\hyperlink{namespacedvr_a157059755a3694b99b8feca66b0d76e9}{main}} (argv)
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
 \begin{DoxyVerb}@file dvr.py
 
-@brief This file contains implementations for Distance Vector Routing algorithms.
-This module defines classes and functions related to Distance Vector Routing algorithms.
+@brief This file contains classes, functions, and their implementations for Distance Vector Routing algorithms.
 
 @author Peter Na (rkna02)
-@author Eason Feng (Eason1223)
+@author Eason Feng (eason1223)
 
 @bug No known bugs
 \end{DoxyVerb}
  
 
 \doxysubsection{Function Documentation}
-\Hypertarget{namespacedvr_abb1393ef6880d7c5730d0494cf81a655}\label{namespacedvr_abb1393ef6880d7c5730d0494cf81a655} 
-\index{dvr@{dvr}!apply\_change@{apply\_change}}
-\index{apply\_change@{apply\_change}!dvr@{dvr}}
-\doxysubsubsection{\texorpdfstring{apply\_change()}{apply\_change()}}
-{\footnotesize\ttfamily dvr.\+apply\+\_\+change (\begin{DoxyParamCaption}\item[{}]{network,  }\item[{}]{node1\+\_\+id,  }\item[{}]{node2\+\_\+id,  }\item[{}]{cost }\end{DoxyParamCaption})}
-
-\begin{DoxyVerb}@brief Applies a network link change to the network topology.
-
-@param network: The Network object containing nodes.
-@param node1_id: The ID of the first node in the change.
-@param node2_id: The ID of the second node in the change.
-@param cost: The cost of the link between the nodes (-999 for link removal).
-
-@return Void
-\end{DoxyVerb}
- \Hypertarget{namespacedvr_a297c9eb18aa87fec75e422563afbbb04}\label{namespacedvr_a297c9eb18aa87fec75e422563afbbb04} 
-\index{dvr@{dvr}!forward\_messages@{forward\_messages}}
-\index{forward\_messages@{forward\_messages}!dvr@{dvr}}
-\doxysubsubsection{\texorpdfstring{forward\_messages()}{forward\_messages()}}
-{\footnotesize\ttfamily dvr.\+forward\+\_\+messages (\begin{DoxyParamCaption}\item[{}]{file\+\_\+name,  }\item[{}]{network,  }\item[{}]{file\+\_\+path }\end{DoxyParamCaption})}
-
-\begin{DoxyVerb}@brief Forwards messages from source to destination nodes in the network. Writes the message outputs to file_path 
-
-@param file_name: The name of the file containing messages.
-@param network: The Network object containing nodes.
-@param file_path: The path of the output file to write message forwarding results.
-
-@return Void
-\end{DoxyVerb}
- \Hypertarget{namespacedvr_adfe8792e9549fecafc0de49385dcd62f}\label{namespacedvr_adfe8792e9549fecafc0de49385dcd62f} 
-\index{dvr@{dvr}!initial\_routing\_table\_setup@{initial\_routing\_table\_setup}}
-\index{initial\_routing\_table\_setup@{initial\_routing\_table\_setup}!dvr@{dvr}}
-\doxysubsubsection{\texorpdfstring{initial\_routing\_table\_setup()}{initial\_routing\_table\_setup()}}
-{\footnotesize\ttfamily dvr.\+initial\+\_\+routing\+\_\+table\+\_\+setup (\begin{DoxyParamCaption}\item[{}]{network }\end{DoxyParamCaption})}
-
-\begin{DoxyVerb}@brief Initializes the routing table for each node in the network.
-
-@param network: The Network object containing nodes.
-
-@return Void 
-\end{DoxyVerb}
- \Hypertarget{namespacedvr_a4c0ff886c3d60ad042d18c22d350cf4c}\label{namespacedvr_a4c0ff886c3d60ad042d18c22d350cf4c} 
+\Hypertarget{namespacedvr_a157059755a3694b99b8feca66b0d76e9}\label{namespacedvr_a157059755a3694b99b8feca66b0d76e9} 
 \index{dvr@{dvr}!main@{main}}
 \index{main@{main}!dvr@{dvr}}
 \doxysubsubsection{\texorpdfstring{main()}{main()}}
-{\footnotesize\ttfamily dvr.\+main (\begin{DoxyParamCaption}\item[{}]{topology\+\_\+file,  }\item[{}]{message\+\_\+file,  }\item[{}]{change\+\_\+file,  }\item[{}]{output\+\_\+file }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily dvr.\+main (\begin{DoxyParamCaption}\item[{}]{argv }\end{DoxyParamCaption})}
 
-\begin{DoxyVerb}@brief Main function to run the Distance Vector Routing algorithm.
+\begin{DoxyVerb}@brief Main function to start the network simulation.
 
-@param topology_file: The name of the file containing the network topology.
-@param message_file: The name of the file containing messages to forward.
-@param change_file: The name of the file containing changes to the network topology.
-@param output_file: The path of the output file to write results.
-
-@return Void
-\end{DoxyVerb}
- \Hypertarget{namespacedvr_a3312c1452a6ad22bb051b72cc712248e}\label{namespacedvr_a3312c1452a6ad22bb051b72cc712248e} 
-\index{dvr@{dvr}!read\_changes@{read\_changes}}
-\index{read\_changes@{read\_changes}!dvr@{dvr}}
-\doxysubsubsection{\texorpdfstring{read\_changes()}{read\_changes()}}
-{\footnotesize\ttfamily dvr.\+read\+\_\+changes (\begin{DoxyParamCaption}\item[{}]{change\+\_\+file }\end{DoxyParamCaption})}
-
-\begin{DoxyVerb}@brief Reads changes to the network topology from the change file.
-
-@param change_file: The name of the file containing changes.
-
-@return: A list of tuples representing the changes.
-\end{DoxyVerb}
- \Hypertarget{namespacedvr_a24bc4b3cfd71b87a594518ece507eddb}\label{namespacedvr_a24bc4b3cfd71b87a594518ece507eddb} 
-\index{dvr@{dvr}!read\_topology@{read\_topology}}
-\index{read\_topology@{read\_topology}!dvr@{dvr}}
-\doxysubsubsection{\texorpdfstring{read\_topology()}{read\_topology()}}
-{\footnotesize\ttfamily dvr.\+read\+\_\+topology (\begin{DoxyParamCaption}\item[{}]{file\+\_\+name,  }\item[{}]{network }\end{DoxyParamCaption})}
-
-\begin{DoxyVerb}@brief Reads the network topology from a file and constructs the internal network object.
-
-@param file_name: The name of the file containing the topology.
-@param network: The Network object to store the topology.
-
-@return Void
-\end{DoxyVerb}
- \Hypertarget{namespacedvr_abad1b0ab2a9abdf21efecf9974d84ee2}\label{namespacedvr_abad1b0ab2a9abdf21efecf9974d84ee2} 
-\index{dvr@{dvr}!update\_distance\_vectors@{update\_distance\_vectors}}
-\index{update\_distance\_vectors@{update\_distance\_vectors}!dvr@{dvr}}
-\doxysubsubsection{\texorpdfstring{update\_distance\_vectors()}{update\_distance\_vectors()}}
-{\footnotesize\ttfamily dvr.\+update\+\_\+distance\+\_\+vectors (\begin{DoxyParamCaption}\item[{}]{network }\end{DoxyParamCaption})}
-
-\begin{DoxyVerb}@brief Updates the distance vectors for each node in the network.
-
-@param network: The Network object containing nodes.
-
-@return Void
-\end{DoxyVerb}
- \Hypertarget{namespacedvr_adc04f22c8bb20d6df48b948aadd94a69}\label{namespacedvr_adc04f22c8bb20d6df48b948aadd94a69} 
-\index{dvr@{dvr}!write\_forwarding\_tables@{write\_forwarding\_tables}}
-\index{write\_forwarding\_tables@{write\_forwarding\_tables}!dvr@{dvr}}
-\doxysubsubsection{\texorpdfstring{write\_forwarding\_tables()}{write\_forwarding\_tables()}}
-{\footnotesize\ttfamily dvr.\+write\+\_\+forwarding\+\_\+tables (\begin{DoxyParamCaption}\item[{}]{network,  }\item[{}]{file\+\_\+path }\end{DoxyParamCaption})}
-
-\begin{DoxyVerb}@brief Writes forwarding tables to an output file.
-
-@param network: The Network object containing nodes.
-@param file_path: The path of the output file to write forwarding tables.
+@param argv: Command line arguments.
 
 @return Void
 \end{DoxyVerb}

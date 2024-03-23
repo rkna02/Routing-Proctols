@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['write_5fforwarding_5ftables_0',['write_forwarding_tables',['../namespacedvr.html#adc04f22c8bb20d6df48b948aadd94a69',1,'dvr']]]
+  ['print_5frouting_5ftable_0',['print_routing_table',['../classdvr_1_1_network_simulator.html#a84dc4a6f62c06310c6cd4a3f5d6f6cdf',1,'dvr::NetworkSimulator']]]
 ];
